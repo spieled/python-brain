@@ -2,11 +2,13 @@
 <html>
 <head>
     <title>time</title>
-    <link rel="stylesheet" href="/static/css/default-new.css"/>
+    {% load staticfiles %}
+    {% comment %}<link rel="stylesheet" href="/static/css/default-new.css"/>{% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/default-new.css' %}"/>
 </head>
 <body>
     <section class="hero-wrapper scroll-effect full-width-container container" data-scroll-effect-type="parallax">
-        <div class="scroll-effect-layer hero-area hero-home" data-parallax-effect="vertical" data-parallax-offset-x="0" data-parallax-offset-y="-80" data-parallax-speed="2" style="background-image: url('/static/images/spotlights/home.jpg'); background-position: 0px 20px;">
+        <div class="scroll-effect-layer hero-area hero-home" data-parallax-effect="vertical" data-parallax-offset-x="0" data-parallax-offset-y="-80" data-parallax-speed="2" style="background-image: url('{% static "images/spotlights/home.jpg" %}'); background-position: 0px 20px;">
           <div class="hero-inner-shadow"></div>
           <p class="hero-photo-credit">
             Global Impact Awardee, SolarAid, is bringing solar lighting to rural communities.
@@ -48,7 +50,7 @@ it is now {{ currentTime }}!
               <a class="shadow curved-shadow" href="./spotlights#content-giving-through-glass">
               <figure>
                 <div class="spotlight-img-wrapper">
-                  <img alt="Giving Through Glass" src="/static/images/spotlights/home-glass-program.jpg">
+                  <img alt="Giving Through Glass" src="{% static 'images/spotlights/home-glass-program.jpg' %}">
                 </div>
                 <div class="caption-wrapper">
                   <figcaption>
@@ -61,7 +63,7 @@ it is now {{ currentTime }}!
               <a class="shadow curved-shadow" href="./global-impact-awards/challenge/#content-australia">
               <figure>
                 <div class="spotlight-img-wrapper">
-                  <img alt="Launching Impact Challenge in Australia" src="/static/images/spotlights/home-impact-challenge-australia.jpg">
+                  <img alt="Launching Impact Challenge in Australia" src="{% static 'images/spotlights/home-impact-challenge-australia.jpg' %}">
                 </div>
                 <div class="caption-wrapper">
                   <figcaption>
@@ -74,7 +76,7 @@ it is now {{ currentTime }}!
               <a class="shadow curved-shadow" href="./spotlights#content-improving-computer-science-education">
               <figure>
                 <div class="spotlight-img-wrapper">
-                  <img alt="Improving Computer Science Education" src="/static/images/spotlights/home-computer-science.jpg">
+                  <img alt="Improving Computer Science Education" src="{% static 'images/spotlights/home-computer-science.jpg' %}">
                 </div>
                 <div class="caption-wrapper">
                   <figcaption>
@@ -87,7 +89,7 @@ it is now {{ currentTime }}!
               <a class="shadow curved-shadow" href="./global-impact-awards/challenge/#content-bay-area">
               <figure>
                 <div class="spotlight-img-wrapper">
-                  <img alt="Supporting Bay Area Nonprofits" src="/static/images/spotlights/home-supporting-bay-area-nonprofits.jpg">
+                  <img alt="Supporting Bay Area Nonprofits" src="{% static 'images/spotlights/home-supporting-bay-area-nonprofits.jpg' %}">
                 </div>
                 <div class="caption-wrapper">
                   <figcaption>
@@ -100,7 +102,7 @@ it is now {{ currentTime }}!
               <a class="shadow curved-shadow" href="./spotlights#content-empowering-women-and-girls">
               <figure>
                 <div class="spotlight-img-wrapper">
-                  <img alt="Empowering Women &amp; Girls" src="/static/images/spotlights/home-women-and-girls.jpg">
+                  <img alt="Empowering Women &amp; Girls" src="{% static 'images/spotlights/home-women-and-girls.jpg' %}">
                 </div>
                 <div class="caption-wrapper">
                   <figcaption>
@@ -113,7 +115,7 @@ it is now {{ currentTime }}!
               <a class="shadow curved-shadow" href="./spotlights#content-fighting-human-trafficking-and-child-abuse">
               <figure>
                 <div class="spotlight-img-wrapper">
-                  <img alt="Fighting Trafficking and Child Abuse" src="/static/images/spotlights/home-trafficking-slavery.jpg">
+                  <img alt="Fighting Trafficking and Child Abuse" src="{% static 'images/spotlights/home-trafficking-slavery.jpg' %}">
                 </div>
                 <div class="caption-wrapper">
                   <figcaption>

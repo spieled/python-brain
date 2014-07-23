@@ -36,6 +36,10 @@ STATICFILES_DIRS = (
     'static',
 )
 
+STATIC_URL = (
+    '/static/',
+)
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
