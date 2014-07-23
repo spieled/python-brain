@@ -1,0 +1,16 @@
+.ui-tree-trigger {
+
+}
+
+.ui-tree-element {
+    overflow: auto;
+    border: solid 1px #ccc;
+    background-color: #fff;
+    box-shadow: 0 0 3px #8cddff;
+    min-height: 50px;
+    max-height: 250px;
+}
+
+.ml5 {
+    margin-left: 5px;
+}
