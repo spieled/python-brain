@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>index</title>
+    {% load staticfiles %}
+    {% comment %}<link rel="stylesheet" href="/static/css/default-new.css"/>{% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/default-new.css' %}"/>
+</head>
+<body>
+    <section class="hero-wrapper scroll-effect full-width-container container" data-scroll-effect-type="parallax">
+        <div class="scroll-effect-layer hero-area hero-home" data-parallax-effect="vertical" data-parallax-offset-x="0" data-parallax-offset-y="-80" data-parallax-speed="2" style="background-image: url('{% static "images/spotlights/home.jpg" %}'); background-position: 0px 20px;">
+          <div class="hero-inner-shadow"></div>
+          <p class="hero-photo-credit">
+            Global Impact Awardee, SolarAid, is bringing solar lighting to rural communities.
+          </p>
+        </div>
+        <div class="maia-aux">
+          <div class="maia-cols"></div>
+        </div>
+    </section>
+
+    <section class="spotlight-area">
+        <div class="maia-aux">
+          <h2>
+            member<strong>detail</strong>
+          </h2>
+          <div class="maia-cols">
+            <div class="maia-col-4">
+                <ul>
+                    {% if member %}
+                        <li>pk: {{ member.pk }}</li>
+                        <li>username: {{ member.username }}</li>
+                        <li>fullname: {{ member.fullname }}</li>
+                        <li>avatar: {{ member.avatar }}</li>
+                    {% endif %}
+                </ul>
+            </div>
+          </div>
+        </div>
+    </section>
+
+</body>
+</html>
