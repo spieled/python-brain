@@ -20,11 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = '%ag4bxypj)qm8la(ghxuyg)3*5^3tvc1nce$zpzl8efb&wy#fm'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# 默认情况，当DEBUG为FALSE的时候，django不再提供静态服务，无法引用静态文件。最佳解决方案 python manager.py runserver --insecure
+DEBUG = False
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition

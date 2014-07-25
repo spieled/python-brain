@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from application.views import *
+from application.datas import *
 
 
 urlpatterns = patterns('',
@@ -8,4 +9,6 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'hello/', hello),
+    url(r'member/save/', member_save),
+    url(r'member/show/', member_show),
 )
