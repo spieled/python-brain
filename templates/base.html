@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load staticfiles %}
+    <link rel="icon" href="{% static 'images/icon.png' %}" type="image/x-icon"/>
+    <link rel="shortcut icon" href="{% static 'images/icon.png' %}" type="image/x-icon"/>
+    <title>{% block title %} python brain {% endblock %}</title>
+    {% block staticResource %}{% endblock %}
+</head>
+<body>
+    {% block body %} hello world! {% endblock %}
+</body>
+</html>
