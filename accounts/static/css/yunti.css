@@ -1,0 +1,680 @@
+@charset "utf-8";
+
+/*始终显示垂直的滚动条*/
+html {
+    overflow-y: scroll;
+}
+
+body {
+    margin: 0;
+}
+
+/*重设标题的字体大小*/
+h1 {
+    font-size: 26px;
+}
+
+/*去掉谷歌Chrome浏览器在获取焦点时自动添加的粗边框*/
+*:focus {
+    outline: none;
+}
+
+.fn-left {
+    float: left !important;
+}
+
+.fn-right {
+    float: right !important;
+}
+
+.mr0 {
+    margin-right: 0px !important;
+}
+
+.mr5 {
+    margin-right: 5px !important;
+}
+
+.mr10 {
+    margin-right: 10px !important;
+}
+
+.mr15 {
+    margin-right: 15px !important;
+}
+
+.mr30 {
+    margin-right: 30px !important;
+}
+
+.mt-45 {
+    margin-top: -45px !important;
+}
+
+.mt-85 {
+    margin-top: -85px !important;
+}
+
+.mt-20 {
+    margin-top: -20px !important;
+}
+
+.mt-10 {
+    margin-top: -10px !important;
+}
+
+.mt-5 {
+    margin-top: -5px !important;
+}
+
+.m0 {
+    margin: 0px !important;
+}
+
+.mb0 {
+    margin-bottom: 0px !important;
+}
+
+.mb10 {
+    margin-bottom: 10px !important;
+}
+
+.mb5 {
+    margin-bottom: 5px !important;
+}
+
+.mb20 {
+    margin-bottom: 20px !important;
+}
+
+.mt5 {
+    margin-top: 5px !important;
+}
+
+.mt10 {
+    margin-top: 10px !important;
+}
+
+.mt20 {
+    margin-top: 20px !important;
+}
+
+.mt30 {
+    margin-top: 30px !important;
+}
+
+.mt70 {
+    margin-top: 70px !important;
+}
+
+.pt10 {
+    padding-top: 10px !important;
+}
+
+.pt5 {
+    padding-top: 5px !important;
+}
+
+.pb10 {
+    padding-bottom: 10px !important;
+}
+
+.pb15 {
+    padding-bottom: 15px !important;
+}
+
+.pr0 {
+    padding-right: 0px !important;
+}
+
+.pr5 {
+    padding-right: 5px !important;
+}
+
+.pr10 {
+    padding-right: 10px !important;
+}
+
+.pr20 {
+    padding-right: 20px !important;
+}
+
+.ml-10 {
+    margin-left: -10px !important
+}
+
+.ml5 {
+    margin-left: 5px !important;
+}
+
+.ml10 {
+    margin-left: 10px !important;
+}
+
+.ml15 {
+    margin-left: 15px !important;
+}
+
+.ml20 {
+    margin-left: 20px !important;
+}
+
+.ml30 {
+    margin-left: 30px !important;
+}
+
+/*主体容器大小*/
+.wrapper {
+    margin: 0px auto;
+    /*min-width: 900px;*/
+    /*min-height: 400px;*/
+    /*max-width: 1440px;*/
+}
+
+.top-nav {
+    float: right;
+    padding-top: 15px;
+}
+
+.top-nav * {
+    color: #fff !important;
+}
+
+.top-nav-content {
+    padding: 6px 10px 0px 10px;
+}
+
+.top-nav ul {
+    list-style: none
+}
+
+.top-nav .first {
+    border: none;
+}
+
+.top-nav li {
+    float: left;
+    padding: 0px 5px;
+    border: none;
+}
+
+.ui-grid-row {
+    margin-bottom: 10px !important;
+    margin-right: auto;
+}
+
+.ui-grid-auto {
+    overflow: hidden;
+}
+
+.ui-table
+.ui-table-split, .ui-table-hover {
+    background-color: #FBFBFB !important;
+}
+
+.ui-table th {
+    border: 1px solid #d9d9d9;
+    font-weight: bold;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.ui-table td {
+    border: 1px solid #d9d9d9;
+}
+
+#tabnav-wrapper {
+    background: url("gray_bg.png") repeat-y;
+    zoom: 1; /* for IE6 IE7 */
+    float: left;
+    width: 140px;
+    margin-left: 1px;
+    height: auto;
+}
+
+#tabnav-wrapper:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+#tabnav {
+    margin: 60px 0;
+}
+
+.tabnav {
+    border-top: 1px solid #e2e8ed;
+    border-bottom: 1px solid #f7f7f9;
+}
+
+.tabnav-title {
+    color: #666666 !important;
+    font-weight: bold;
+}
+
+.tabnav-item {
+    position: relative;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 140px;
+    font-size: 14px;
+    height: 45px;
+    line-height: 43px;
+    border-bottom: 1px solid #e2e8ed;
+    border-top: 1px solid #f7f7f9;
+}
+
+.tabnav-link {
+    color: #666666 !important;
+    display: block;
+    text-decoration: none;
+    height: 43px;
+    padding-left: 29px;
+    /*border-bottom: 1px solid #e2e8ed;*/
+    /*border-top: 1px solid #f7f7f9;*/
+}
+
+.tabnav-angle {
+    position: absolute;
+    top: 3px;
+    right: 18px;
+    cursor: pointer;
+    color: #969696;
+    font-size: 12px;
+}
+
+.tabnav-item-current {
+    width: 140px;
+    background-color: #FFF;
+    font-weight: bold;
+    box-shadow: -1px 1px 1px #e3e3e6;
+    margin-left: 1px;
+    border-bottom: none;
+}
+
+.tabnav-item-current .tabnav-link {
+    color: #4d4d4d;
+}
+
+.tabnav .tabnav-link:hover {
+    color: #666666;
+    text-decoration: none;
+    background-color: #e2e8ed;
+    border-top: none;
+    padding-top: 1px;
+    background-position: 114px 19px;
+}
+
+.ui-form fieldset {
+    padding: 5px 15px 5px 15px;
+    border: solid 1px #afafaf;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.ui-form legend {
+    display: block;
+    padding: 2px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.ui-form-item {
+    padding: 0 5px 20px 110px;
+}
+
+.font_14px {
+    font-size: 14px !important;
+}
+
+.px14 {
+    font-size: 14px !important;
+}
+
+.px16 {
+    font-size: 16px !important;
+}
+
+.px12 {
+    font-size: 12px !important;
+}
+
+.px10 {
+    font-size: 10px !important;
+}
+
+.bold {
+    font-weight: bold !important;
+}
+
+.lh30 {
+    line-height: 30px;
+}
+
+.pl100 {
+    padding-left: 100px !important;
+}
+
+.pl10 {
+    padding-left: 10px !important;
+}
+
+.pl5 {
+    padding-left: 5px !important;
+}
+
+.pl70 {
+    padding-left: 70px !important;
+}
+
+.pl80 {
+    padding-left: 80px !important;
+}
+
+.pl0 {
+    padding-left: 0px !important;
+}
+
+.px100 {
+    width: 100px !important;
+}
+
+.px70 {
+    width: 70px !important;
+}
+
+.px40 {
+    width: 40px !important;
+}
+
+.m0 {
+    margin: 0px !important;
+}
+
+.w250 {
+    width: 250px !important;
+}
+
+.w300 {
+    width: 300px !important;
+}
+
+.w350 {
+    width: 350px !important;
+}
+
+.w125 {
+    width: 125px !important;
+}
+
+.w115 {
+    width: 115px !important;
+}
+
+.w100 {
+    width: 100px !important;
+}
+
+.w150 {
+    width: 150px !important;
+}
+
+.w535 {
+    width: 535px !important;
+}
+
+.w600 {
+    width: 600px;
+}
+
+.w800 {
+    width: 800px;
+}
+
+.h60 {
+    height: 60px;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.ui-button-power {
+    width: 28px;
+    height: 28px;
+    padding-right: 6px;
+    padding-top: 6px;
+}
+
+/* 这个用于搜索表单内的单选项标题文字 */
+.ui-form-label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #4d4d4d;
+    margin-right: 20px;
+}
+
+/* 这是搜索表单的主要样式 */
+.searchform {
+    border: 1px solid #cbdaea;
+    border-top: 1px solid #b3cfee;
+    background-color: #f4f9fe;
+    padding: 10px 10px 4px 10px;
+    margin-bottom: 10px;
+    min-height: 40px;
+}
+
+.ui-line-through {
+    text-decoration: line-through;
+}
+
+/* 以下的两个关于iconfont的覆盖，是为了保证在用户自定义了字体大小后图标不失真。  */
+.ui-tipbox-icon .iconfont {
+    font-size: 36px !important;
+}
+
+.ui-tiptext .iconfont {
+    font-size: 1.33em !important;
+}
+
+/* ui-switchable-nav 指的就是Tab效果，这个class放到UL上 */
+.ui-switchable-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #b3cfee;
+    font-size: 14px;
+}
+
+.ui-switchable-nav li {
+    list-style: none;
+    vertical-align: top;
+    position: relative;
+    top: 1px;
+    border-radius: 3px 3px 0 0;
+    cursor: pointer;
+    line-height: 32px;
+    height: 32px;
+    padding: 0 10px;
+    border: 1px solid #E5E5E5;
+    border-bottom: none;
+    color: #4D4D4D;
+    display: inline-block;
+    transition: background-color 0.4s ease-out, color 0.4s ease-out;
+    *display: inline;
+    *zoom: 1;
+    *margin-right: 4px;
+}
+
+.ui-switchable-nav .ui-switchable-active {
+    font-weight: bold;
+    height: 33px;
+    background: #f4f9fe;
+    border: 1px solid #b3cfee;
+    border-bottom: none;
+}
+
+.ui-switchable-content {
+    position: relative;
+    padding: 20px;
+    border: 1px solid #cbdaea;
+    border-top: none;
+    margin-bottom: 10px;
+    height: auto;
+}
+
+.ui-switchable-panel {
+}
+
+.ui-poptip-mark {
+    font-style: normal;
+    color: #f08200;
+    cursor: help;
+    font-size: 12px;
+}
+
+.left {
+    text-align: left !important;
+}
+
+.right {
+    text-align: right !important;
+}
+
+.red {
+    color: #ff0000 !important;
+}
+
+.blue {
+    color: blue !important;
+}
+
+.orange {
+    color: orange !important;
+}
+
+.gray {
+    color: gray !important;
+}
+
+.green {
+    color: green !important;
+}
+
+.p5 {
+    padding: 5px !important;
+}
+
+.p0 {
+    padding: 0px !important;
+}
+
+.p10 {
+    padding: 10px !important;
+}
+
+.mapIcon {
+    width: 22px;
+    height: 22px;
+}
+
+label.error {
+    padding-left: 5px;
+    color: red;
+}
+
+input.error {
+    border: solid 1px red;
+}
+
+div.ui-radio {
+    padding-top: 5px;
+}
+
+div.ui-radio label {
+    margin-left: -2px;
+    margin-right: 10px;
+}
+
+.ui-textarea {
+    resize: none;
+}
+
+.highlight {
+    background-color: yellow;
+}
+
+.footer {
+    text-align: center;
+    margin: 50px 0px 20px 0px;
+    padding: 10px;
+    color: gray;
+    border-top: solid 1px #DDDDDD;
+}
+
+.ui-comment-container {
+    border-top: solid 1px #E0E0E0;
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+}
+
+.ui-subcomment-container {
+    padding-top: 10px !important;
+    border-top: dashed 1px #E0E0E0;
+}
+
+.h100 {
+    height: 100px !important;
+}
+
+.w35 {
+    width: 35px !important;
+}
+
+.h35 {
+    height: 35px !important;
+}
+
+.ui-select-trigger {
+    height: 32px !important;
+}
+
+.ui-input {
+    margin-top: -1px !important;
+}
+
+.ui-table-container {
+    overflow-x: auto !important;
+    background-color: #FFFFFF;
+}
+
+/*覆盖百度地图的版权标记*/
+.anchorBL {
+    display: none !important;
+}
+
+/*收银台弹出层列表样式*/
+#wareTypeListView, #HARDWAREwareListView, #SOFTWAREwareListView, #CARDWAREwareListView, #SERVICEWAREwareListView {
+    display: none;
+    border: 1px solid #DDD;
+    background-color: #DDD;
+    padding: 10px;
+}
+
+.salereord-ul {
+    display: inherit;
+    max-width: 800px;
+}
+
+.salereord-ul-item {
+    width: 140px;
+    line-height: 25px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

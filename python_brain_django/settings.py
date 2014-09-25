@@ -31,15 +31,22 @@ ALLOWED_HOSTS = ['localhost']
 # Application definition
 TEMPLATE_DIRS = (
     'templates',
+    'application/templates',
+    'accounts/templates',
 )
 
 STATICFILES_DIRS = (
     'static',
+    'application/static',
+    'accounts/static',
 )
 
 STATIC_URL = (
-    '/static/',
+    '/',
 )
+
+# MEDIA_ROOT = 'meida'
+# MEDIA_URL = 'media'
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -49,6 +56,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'application',
+    'accounts',
 )
 
 MIDDLEWARE_CLASSES = (
