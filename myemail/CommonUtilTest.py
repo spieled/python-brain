@@ -1,7 +1,7 @@
 __author__ = '刘少平'
 
 import unittest
-from email import CommonUtil
+from myemail import CommonUtil
 
 # 定义空字符串
 empty = ''
