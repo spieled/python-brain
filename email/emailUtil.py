@@ -14,6 +14,7 @@ mail_postfix = "qq.com"
 
 
 def _do_send_email(to_list, sub, msg):
+    global server
     result = False
     me = "<" + mail_user + "@" + mail_postfix + ">"
     msg["Subject"] = sub
@@ -32,24 +33,24 @@ def _do_send_email(to_list, sub, msg):
     return result
 
 
-def _attach_file(msg, attach_filename_list=[]):
+def _attach_file(msg, attach_filename_list=list()):
     for filename in attach_filename_list:
         # 构建附件
         att = MIMEText(open(filename, 'rb').read(), 'base64', 'gb2312')
         att['Content-Type'] = 'application/octet-stream'
         # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
-        att['Content-Disposition'] = 'attachment; filename="'+os.path.basename(filename)+'"'
+        att['Content-Disposition'] = 'attachment; filename="' + os.path.basename(filename) + '"'
         msg.attach(att)
 
 
-def _attach_img(msg, image_filename_list=[]):
+def _attach_img(msg, image_filename_list=list()):
     img_html = ''
     for filename in image_filename_list:
         image = MIMEImage(open(filename, 'rb').read())
         basename = os.path.basename(filename)
         image.add_header('Content-ID', basename)
         msg.attach(image)
-        img_html += '<div><img src="cid:'+basename+'"/></div>'
+        img_html += '<div><img src="cid:' + basename + '"/></div>'
     return img_html
 
 
@@ -65,7 +66,8 @@ def send_mail_text(to_list, sub, content, sub_type="plain"):
     msg = MIMEText(content, _subtype=sub_type, _charset="gb2312")
     return _do_send_email(to_list, sub, msg)
 
-def send_email_multipart(to_list, sub, content, sub_type='plain', charset='gb2312', attach_filename_list=[]):
+
+def send_email_multipart(to_list, sub, content, sub_type='plain', charset='gb2312', attach_filename_list=list()):
     """
     发送带附件邮件
     to_list: 发送对象（邮件将发给谁）
@@ -86,7 +88,8 @@ def send_email_multipart(to_list, sub, content, sub_type='plain', charset='gb231
     return _do_send_email(to_list, sub, msg)
 
 
-def send_email_image(to_list, sub, content, sub_type='html', charset='gb2312', attach_filename_list=[], image_filename_list=[]):
+def send_email_image(to_list, sub, content, sub_type='html', charset='gb2312', attach_filename_list=list(),
+                     image_filename_list=list()):
     """
     发送带附件邮件
     to_list: 发送对象（邮件将发给谁）
@@ -105,7 +108,7 @@ def send_email_image(to_list, sub, content, sub_type='html', charset='gb2312', a
 
     img_html = _attach_img(msg, image_filename_list)
 
-    msg.attach(MIMEText(content+img_html, sub_type, charset))
+    msg.attach(MIMEText(content + img_html, sub_type, charset))
 
     return _do_send_email(to_list, sub, msg)
 
@@ -116,7 +119,8 @@ if __name__ == "__main__":
     else:
         print("发送失败")
 
-    if send_mail_text(mailto_list, "百度", "请打开<a href='http://www.baidu.com' target='_blank' style='color:red;'>百度</a>", sub_type="html"):
+    if send_mail_text(mailto_list, "百度", "请打开<a href='http://www.baidu.com' target='_blank' style='color:red;'>百度</a>",
+                      sub_type="html"):
         print("发送成功")
     else:
         print("发送失败")
@@ -126,8 +130,8 @@ if __name__ == "__main__":
     else:
         print("发送失败")
 
-    if send_email_image(mailto_list, "hello", "hello world!", attach_filename_list=['./emailUtil.py', '../brain'], image_filename_list=['./bat.jpg', './member.jpg']):
+    if send_email_image(mailto_list, "hello", "hello world!", attach_filename_list=['./emailUtil.py', '../brain'],
+                        image_filename_list=['./bat.jpg', './member.jpg']):
         print("发送成功")
     else:
         print("发送失败")
-
