@@ -1,13 +1,19 @@
 __author__ = '刘少平'
 
 
-def get_extension(path=''):
+def get_extension(path=None):
     """
-    获取文件拓展名
-    /tmp/log.log.txt 返回 'txt'
-    /tmp/log.log 返回 'log'
-    /tmp/log 返回 ''
+    获取文件拓展名:
+        如果path为None或非字符串类型，返回''
+        eg:
+            /tmp/log.log.txt 返回 'txt'
+            /tmp/log.log 返回 'log'
+            /tmp/log 返回 ''
     """
+    if path is None:
+        return ''
+    if not isinstance(path, str):
+        return ''
     import os
     basename = os.path.basename(path)
     names = basename.split('.')
@@ -18,10 +24,14 @@ def get_extension(path=''):
 
 def has_text(text=None):
     """
-    判断text是否有内容: None,空字符串，空白字符串都视为没有内容
-    返回True/False
+    判断text是否有内容:
+        非字符串类型 返回 False
+        None,空字符串，空白字符串 返回 False
+        非空白字符数量大于0 返回 True
     """
     if text is None:
+        return False
+    if not isinstance(text, str):
         return False
     if len(text.strip()) < 1:
         return False
@@ -31,12 +41,13 @@ def has_text(text=None):
 def md5(src=None):
     """
     使用MD5算法加密字符串，返回加密后的字符串
+    当src为非字符串类型时，返回''
     当src为<None、空字符串、空白字符>时，返回''
     md5('123456') 返回 E10ADC3949BA59ABBE56E057F20F883E
     """
-    import hashlib
     if not has_text(src):
         return ''
+    import hashlib
     return hashlib.md5(src.encode()).hexdigest().upper()
 
 
@@ -76,3 +87,4 @@ if __name__ == '__main__':
     print(get_file_md5())
     print(get_file_md5('./CommonUtil.py'))
     print(get_file_md5('README'))
+    print(get_file_md5('bat.jpg'))
