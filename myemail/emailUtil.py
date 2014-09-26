@@ -113,25 +113,104 @@ def send_email_image(to_list, sub, content, sub_type='html', charset='gb2312', a
     return _do_send_email(to_list, sub, msg)
 
 
+def get_email():
+    import imaplib
+    import email
+
+    def extract_body(payload):
+        if isinstance(payload,str):
+            return payload
+        else:
+            return '\n'.join([extract_body(part.get_payload()) for part in payload])
+
+    conn = imaplib.IMAP4_SSL("pop.qq.com", 993)
+    conn.login(mail_user, mail_pass)
+    conn.select()
+    typ, data = conn.search(None, 'UNSEEN')
+    try:
+        for num in data[0].split():
+            typ, msg_data = conn.fetch(num, '(RFC822)')
+            for response_part in msg_data:
+                print(repr(response_part))
+                """
+                (b'377 (RFC822 {3009}', b'Received: from 192.30.252.199 (unknown [192.30.252.199])\r\n\t
+                by newmx23.qq.com (NewMx) with SMTP id \r\n\t
+                for <472458220@qq.com>; Fri, 26 Sep 2014 19:48:29 +0800\r\n
+                X-QQ-SSF: 00510000000000011x900001002060x\r\n
+                X-QQ-FEAT: 8wrabb2CvriALOWqLMw5eFaz0frx03QFgFSdxZ3hIP8=\r\n
+                X-QQ-mid: usamxproxy11t1411732112ta5k17j\r\n
+                X-QQ-CSender: noreply@github.com\r\n
+                X-KK-mid:usamxproxy11t1411732112ta5k17j\r\n
+                Date: Fri, 26 Sep 2014 04:48:28 -0700\r\n
+                From: Heinrich Fenkart <notifications@github.com>\r\n
+                Reply-To: twbs/bootstrap <reply+i-44049676-ff3487fdef5f526a9666428fecd0f2b902402124-5487955@reply.github.com>\r\n
+                To: twbs/bootstrap <bootstrap@noreply.github.com>\r\n
+                Message-ID: <twbs/bootstrap/pull/14689/c56951246@github.com>\r\n
+                In-Reply-To: <twbs/bootstrap/pull/14689@github.com>\r\n
+                References: <twbs/bootstrap/pull/14689@github.com>\r\n
+                Subject: Re: [bootstrap] Added position relative to fix overflow on iOS\r\n
+                 (#14689)\r\nMime-Version: 1.0\r\nContent-Type: multipart/alternative;\r\n
+                 boundary="--==_mimepart_5425528cc360e_529f3ffb7792329c110762e";\r\n
+                 charset=UTF-8\r\nContent-Transfer-Encoding: 7bit\r\nPrecedence: list\r\n
+                 X-GitHub-Recipient: spieled\r\nList-ID: twbs/bootstrap <bootstrap.twbs.github.com>\r\n
+                 List-Archive: https://github.com/twbs/bootstrap\r\n
+                 List-Post: <mailto:reply+i-44049676-ff3487fdef5f526a9666428fecd0f2b902402124-5487955@reply.github.com>\r\n
+                 List-Unsubscribe: <mailto:unsub+i-44049676-ff3487fdef5f526a9666428fecd0f2b902402124-5487955@reply.github.com>,\r\n
+                 <https://github.com/notifications/unsubscribe/5487955__eyJzY29wZSI6Ik5ld3NpZXM6TXV0ZSIsImV4cGlyZXMiOjE3MjczNTEzMDgsImRhdGEiOnsiaWQiOjQzODc0Mjg4fX0=--06c0a99b82b5a134bd72e20d93e52cd3c4909f56>\r\n
+                 X-Auto-Response-Suppress: All\r\nX-GitHub-Recipient-Address: 472458220@qq.com\r\n\r\n\r\n
+                 ----==_mimepart_5425528cc360e_529f3ffb7792329c110762e\r\nContent-Type: text/plain;\r\n
+                 charset=UTF-8\r\nContent-Transfer-Encoding: 7bit\r\n\r\nPlease post an example of the problem this fixes using JS Bin.
+                 \r\n\r\n---\r\nReply to this email directly or view it on GitHub:\r\n
+                 https://github.com/twbs/bootstrap/pull/14689#issuecomment-56951246\r\n
+                 ----==_mimepart_5425528cc360e_529f3ffb7792329c110762e\r\nContent-Type: text/html;\r\n charset=UTF-8\r\n
+                 Content-Transfer-Encoding: 7bit\r\n\r\n<p>Please post an example of the problem this fixes using JS Bin.</p>\r\n\r\n
+                 <p style="font-size:small;-webkit-text-size-adjust:none;color:#666;">&mdash;<br>Reply to this email directly or
+                 <a href="https://github.com/twbs/bootstrap/pull/14689#issuecomment-56951246">view it on GitHub</a>.
+                 <img alt="" height="1" src="https://github.com/notifications/beacon/5487955__
+                 eyJzY29wZSI6Ik5ld3NpZXM6QmVhY29uIiwiZXhwaXJlcyI6MTcyNzM1MTMwOCwiZGF0YSI6eyJpZCI6NDM4NzQyODh9fQ==--
+                 8c8076c27fb952e75f0ce71ea5fe780c29307c5c.gif" width="1" /></p>\r\n
+                 <script type="application/ld+json">{"@context":"http://schema.org","@type":"EmailMessage",
+                 "description":"View this Pull Request on GitHub","action":{"@type":"ViewAction",
+                 "url":"https://github.com/twbs/bootstrap/pull/14689#issuecomment-56951246","name":"View Pull Request"}}
+                 </script>\r\n
+                ----==_mimepart_5425528cc360e_529f3ffb7792329c110762e--\r\n')
+                """
+                if isinstance(response_part, tuple):
+                    # 在下面这一行报错了
+                    msg = email.message_from_string(response_part[1])
+                    subject=msg['subject']
+                    print(subject)
+                    payload=msg.get_payload()
+                    body=extract_body(payload)
+                    print(body)
+            typ, response = conn.store(num, '+FLAGS', r'(\Seen)')
+    finally:
+        try:
+            conn.close()
+        except:
+            pass
+        conn.logout()
+
 if __name__ == "__main__":
-    if send_mail_text(mailto_list, "hello", "hello world!"):
-        print("发送成功")
-    else:
-        print("发送失败")
-
-    if send_mail_text(mailto_list, "百度", "请打开<a href='http://www.baidu.com' target='_blank' style='color:red;'>百度</a>",
-                      sub_type="html"):
-        print("发送成功")
-    else:
-        print("发送失败")
-
-    if send_email_multipart(mailto_list, "hello", "hello world!", attach_filename_list=['./emailUtil.py', '../brain']):
-        print("发送成功")
-    else:
-        print("发送失败")
-
-    if send_email_image(mailto_list, "hello", "hello world!", attach_filename_list=['./emailUtil.py', '../brain'],
-                        image_filename_list=['./bat.jpg', './member.jpg']):
-        print("发送成功")
-    else:
-        print("发送失败")
+    get_email()
+    # if send_mail_text(mailto_list, "hello", "hello world!"):
+    #     print("发送成功")
+    # else:
+    #     print("发送失败")
+    #
+    # if send_mail_text(mailto_list, "百度", "请打开<a href='http://www.baidu.com' target='_blank' style='color:red;'>百度</a>",
+    #                   sub_type="html"):
+    #     print("发送成功")
+    # else:
+    #     print("发送失败")
+    #
+    # if send_email_multipart(mailto_list, "hello", "hello world!", attach_filename_list=['./emailUtil.py', '../brain']):
+    #     print("发送成功")
+    # else:
+    #     print("发送失败")
+    #
+    # if send_email_image(mailto_list, "hello", "hello world!", attach_filename_list=['./emailUtil.py', '../brain'],
+    #                     image_filename_list=['./bat.jpg', './member.jpg']):
+    #     print("发送成功")
+    # else:
+    #     print("发送失败")
