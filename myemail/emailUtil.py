@@ -36,7 +36,7 @@ def _do_send_email(to_list, sub, msg):
 def _attach_file(msg, attach_filename_list=list()):
     for filename in attach_filename_list:
         # 构建附件
-        att = MIMEText(open(filename, 'rb').read(), 'base64', 'gb2312')
+        att = MIMEText(open(filename, 'rb').read(), 'base64', 'utf-8')
         att['Content-Type'] = 'application/octet-stream'
         # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
         att['Content-Disposition'] = 'attachment; filename="' + os.path.basename(filename) + '"'
@@ -63,11 +63,11 @@ def send_mail_text(to_list, sub, content, sub_type="plain"):
     sub_type: 格式邮件（plain/html） 默认为plain
     return: 返回True/False, 表示发送成功与否
     """
-    msg = MIMEText(content, _subtype=sub_type, _charset="gb2312")
+    msg = MIMEText(content, _subtype=sub_type, _charset="utf-8")
     return _do_send_email(to_list, sub, msg)
 
 
-def send_email_multipart(to_list, sub, content, sub_type='plain', charset='gb2312', attach_filename_list=list()):
+def send_email_multipart(to_list, sub, content, sub_type='plain', charset='utf-8', attach_filename_list=list()):
     """
     发送带附件邮件
     to_list: 发送对象（邮件将发给谁）
@@ -88,7 +88,7 @@ def send_email_multipart(to_list, sub, content, sub_type='plain', charset='gb231
     return _do_send_email(to_list, sub, msg)
 
 
-def send_email_image(to_list, sub, content, sub_type='html', charset='gb2312', attach_filename_list=list(),
+def send_email_image(to_list, sub, content, sub_type='html', charset='utf-8', attach_filename_list=list(),
                      image_filename_list=list()):
     """
     发送带附件邮件
@@ -113,86 +113,67 @@ def send_email_image(to_list, sub, content, sub_type='html', charset='gb2312', a
     return _do_send_email(to_list, sub, msg)
 
 
-def get_email():
+def get_email_imap4():
+    """
+    Message b'1170', b'Date: Sat, 27 Sep 2014 10:07:15 +0800\r\nX-QQ-mid: esmtp27t1411783633t947t09703\r\nReceived: from [169.254.34.86] (unknown [175.152.119.29])\r\n\tby esmtp4.qq.com (ESMTP) with SMTP id 0\r\n\tfor <472458220@qq.com>; Sat, 27 Sep 2014 10:07:13 +0800 (CST)\r\nX-QQ-SSF: B101000000000060F1401500000000Z\r\nX-QQ-FEAT: wuSfJRaUZO5rorym8GJsOKt5eak/S3cDy8vfCS3rt443WKahERKt4SqjS7mdW\r\n\tTc2izuRydwGquSRMMU/oq3z0fU/ca8scXM6gVNvgAqUsTp2INgymXVwkSONgwz5wSroRp/m\r\n\t1nf6beLtx2gbDm8OX/WsMDZZX9nUfcsG5avWhq89ZEX3Rk6Bag==\r\nContent-Type: text/plain; charset="utf-8"\r\nMIME-Version: 1.0\r\nContent-Transfer-Encoding: base64\r\nSubject: hello\r\nFrom: <472458220@qq.com>\r\nTo: 472458220@qq.com\r\n\r\naGVsbG8gd29ybGQh\r\n'
+    """
     import imaplib
     import email
+    import base64
+    imap_server = imaplib.IMAP4_SSL("imap.qq.com", 993)
+    imap_server.login(mail_user, mail_pass)
+    imap_server.select()
+    typ, data = imap_server.search(None, 'UNSEEN')
+    for num in data[0].split():
+        typ, data = imap_server.fetch(num, '(RFC822)')
+        msg = email.message_from_string(data[0][1].decode())
 
-    def extract_body(payload):
-        if isinstance(payload,str):
-            return payload
+        subject = msg['Subject']
+        print('Subject: ' + subject)
+        From = msg['From']
+        print('From: ' + From)
+        To = msg['To']
+        print('To; ' + To)
+        if not msg.is_multipart():
+            [print(key, ' : ', value) for key, value in _msg.items()]
+            content = base64.b64decode(bytes(msg.get_payload(), 'utf-8')).decode('utf-8')
+            print('content: ' + content)
         else:
-            return '\n'.join([extract_body(part.get_payload()) for part in payload])
+            print('content: is still a list of Message')
+            _msgs = msg.get_payload()
+            for _msg in _msgs:
+                [print(key, ' : ', value) for key, value in _msg.items()]
 
-    conn = imaplib.IMAP4_SSL("pop.qq.com", 993)
-    conn.login(mail_user, mail_pass)
-    conn.select()
-    typ, data = conn.search(None, 'UNSEEN')
-    try:
-        for num in data[0].split():
-            typ, msg_data = conn.fetch(num, '(RFC822)')
-            for response_part in msg_data:
-                print(repr(response_part))
-                """
-                (b'377 (RFC822 {3009}', b'Received: from 192.30.252.199 (unknown [192.30.252.199])\r\n\t
-                by newmx23.qq.com (NewMx) with SMTP id \r\n\t
-                for <472458220@qq.com>; Fri, 26 Sep 2014 19:48:29 +0800\r\n
-                X-QQ-SSF: 00510000000000011x900001002060x\r\n
-                X-QQ-FEAT: 8wrabb2CvriALOWqLMw5eFaz0frx03QFgFSdxZ3hIP8=\r\n
-                X-QQ-mid: usamxproxy11t1411732112ta5k17j\r\n
-                X-QQ-CSender: noreply@github.com\r\n
-                X-KK-mid:usamxproxy11t1411732112ta5k17j\r\n
-                Date: Fri, 26 Sep 2014 04:48:28 -0700\r\n
-                From: Heinrich Fenkart <notifications@github.com>\r\n
-                Reply-To: twbs/bootstrap <reply+i-44049676-ff3487fdef5f526a9666428fecd0f2b902402124-5487955@reply.github.com>\r\n
-                To: twbs/bootstrap <bootstrap@noreply.github.com>\r\n
-                Message-ID: <twbs/bootstrap/pull/14689/c56951246@github.com>\r\n
-                In-Reply-To: <twbs/bootstrap/pull/14689@github.com>\r\n
-                References: <twbs/bootstrap/pull/14689@github.com>\r\n
-                Subject: Re: [bootstrap] Added position relative to fix overflow on iOS\r\n
-                 (#14689)\r\nMime-Version: 1.0\r\nContent-Type: multipart/alternative;\r\n
-                 boundary="--==_mimepart_5425528cc360e_529f3ffb7792329c110762e";\r\n
-                 charset=UTF-8\r\nContent-Transfer-Encoding: 7bit\r\nPrecedence: list\r\n
-                 X-GitHub-Recipient: spieled\r\nList-ID: twbs/bootstrap <bootstrap.twbs.github.com>\r\n
-                 List-Archive: https://github.com/twbs/bootstrap\r\n
-                 List-Post: <mailto:reply+i-44049676-ff3487fdef5f526a9666428fecd0f2b902402124-5487955@reply.github.com>\r\n
-                 List-Unsubscribe: <mailto:unsub+i-44049676-ff3487fdef5f526a9666428fecd0f2b902402124-5487955@reply.github.com>,\r\n
-                 <https://github.com/notifications/unsubscribe/5487955__eyJzY29wZSI6Ik5ld3NpZXM6TXV0ZSIsImV4cGlyZXMiOjE3MjczNTEzMDgsImRhdGEiOnsiaWQiOjQzODc0Mjg4fX0=--06c0a99b82b5a134bd72e20d93e52cd3c4909f56>\r\n
-                 X-Auto-Response-Suppress: All\r\nX-GitHub-Recipient-Address: 472458220@qq.com\r\n\r\n\r\n
-                 ----==_mimepart_5425528cc360e_529f3ffb7792329c110762e\r\nContent-Type: text/plain;\r\n
-                 charset=UTF-8\r\nContent-Transfer-Encoding: 7bit\r\n\r\nPlease post an example of the problem this fixes using JS Bin.
-                 \r\n\r\n---\r\nReply to this email directly or view it on GitHub:\r\n
-                 https://github.com/twbs/bootstrap/pull/14689#issuecomment-56951246\r\n
-                 ----==_mimepart_5425528cc360e_529f3ffb7792329c110762e\r\nContent-Type: text/html;\r\n charset=UTF-8\r\n
-                 Content-Transfer-Encoding: 7bit\r\n\r\n<p>Please post an example of the problem this fixes using JS Bin.</p>\r\n\r\n
-                 <p style="font-size:small;-webkit-text-size-adjust:none;color:#666;">&mdash;<br>Reply to this email directly or
-                 <a href="https://github.com/twbs/bootstrap/pull/14689#issuecomment-56951246">view it on GitHub</a>.
-                 <img alt="" height="1" src="https://github.com/notifications/beacon/5487955__
-                 eyJzY29wZSI6Ik5ld3NpZXM6QmVhY29uIiwiZXhwaXJlcyI6MTcyNzM1MTMwOCwiZGF0YSI6eyJpZCI6NDM4NzQyODh9fQ==--
-                 8c8076c27fb952e75f0ce71ea5fe780c29307c5c.gif" width="1" /></p>\r\n
-                 <script type="application/ld+json">{"@context":"http://schema.org","@type":"EmailMessage",
-                 "description":"View this Pull Request on GitHub","action":{"@type":"ViewAction",
-                 "url":"https://github.com/twbs/bootstrap/pull/14689#issuecomment-56951246","name":"View Pull Request"}}
-                 </script>\r\n
-                ----==_mimepart_5425528cc360e_529f3ffb7792329c110762e--\r\n')
-                """
-                if isinstance(response_part, tuple):
-                    # 在下面这一行报错了
-                    msg = email.message_from_string(response_part[1])
-                    subject=msg['subject']
-                    print(subject)
-                    payload=msg.get_payload()
-                    body=extract_body(payload)
-                    print(body)
-            typ, response = conn.store(num, '+FLAGS', r'(\Seen)')
-    finally:
-        try:
-            conn.close()
-        except:
-            pass
-        conn.logout()
+                from myemail import CommonUtil
+                import codecs
+                content_disposition = _msg.get('Content-Disposition')
+                if CommonUtil.has_text(content_disposition):
+                    _cons = content_disposition.split(';')
+                    if _cons[0] == 'attachment':
+                        filename = _cons[1].split('=')[1].replace('"', '')
+                        content = base64.b64decode(bytes(_msg.get_payload(), 'utf-8')).decode('utf-8')
+                        file_raw = codecs.open('./attachment_raw/' + filename, 'w', 'utf-8')
+                        file_raw.write(content)
+                        file_raw.close()
+                        file_encrypt = open('./attachment_encrypt/' + filename, 'wb')
+                        file_encrypt.write(bytes(_msg.get_payload(), 'utf-8'))
+                        file_encrypt.close()
+                elif _msg.get_content_maintype() == 'text' and _msg.get_content_subtype() != 'base64':
+                    content = base64.b64decode(bytes(_msg.get_payload(), 'utf-8')).decode('utf-8')
+                    print(content)
+                elif _msg.get_content_maintype() == 'image':
+                    # Content-ID  :  bat.jpg
+                    cid = _msg.get('Content-ID')
+                    file_encrypt = open('./attachment_encrypt/' + cid, 'wb')
+                    file_encrypt.write(base64.b64decode(bytes(_msg.get_payload(), 'utf-8')))
+                    file_encrypt.close()
+
+    imap_server.close()
+    imap_server.logout()
+
 
 if __name__ == "__main__":
-    get_email()
+
     # if send_mail_text(mailto_list, "hello", "hello world!"):
     #     print("发送成功")
     # else:
@@ -214,3 +195,5 @@ if __name__ == "__main__":
     #     print("发送成功")
     # else:
     #     print("发送失败")
+
+    get_email_imap4()
