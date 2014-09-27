@@ -150,25 +150,25 @@ def get_human_time(timestamp=None):
            str(now.hour).zfill(2) + ':' + str(now.minute).zfill(2) + ':' + str(now.second).zfill(2)
 
 if __name__ == '__main__':
-    # print('extension of /tmp/log.log.txt is', get_extension('/tmp/log.log.txt'))
-    # print('extension of /tmp/log.log is', get_extension('/tmp/log.log'))
-    # print('extension of /tmp/log is', get_extension('/tmp/log'))
-    #
-    # print(has_text())
-    # print(has_text(""))
-    # print(has_text("      "))
-    # print(has_text("    \t \n\r "))
-    # print(has_text("   p  "))
-    #
-    # print(md5('123456'))
-    # print(md5())
-    # print(md5(''))
-    # print(md5('  '))
-    #
-    # print(get_file_md5())
-    # print(get_file_md5('./CommonUtil.py'))
-    # print(get_file_md5('README'))
-    # print(get_file_md5('bat.jpg'))
+    print('extension of /tmp/log.log.txt is', get_extension('/tmp/log.log.txt'))
+    print('extension of /tmp/log.log is', get_extension('/tmp/log.log'))
+    print('extension of /tmp/log is', get_extension('/tmp/log'))
+
+    print(has_text())
+    print(has_text(""))
+    print(has_text("      "))
+    print(has_text("    \t \n\r "))
+    print(has_text("   p  "))
+
+    print(md5('123456'))
+    print(md5())
+    print(md5(''))
+    print(md5('  '))
+
+    print(get_file_md5())
+    print(get_file_md5('./CommonUtil.py'))
+    print(get_file_md5('README'))
+    print(get_file_md5('bat.jpg'))
 
     print(get_current_timestamp())
     print(get_current_nanosecond())
