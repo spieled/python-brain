@@ -1,5 +1,9 @@
 __author__ = '刘少平'
 
+import calendar
+import os
+import hashlib
+from datetime import datetime
 
 def get_extension(path=None):
     """
@@ -14,7 +18,6 @@ def get_extension(path=None):
         return ''
     if not isinstance(path, str):
         return ''
-    import os
     basename = os.path.basename(path)
     names = basename.split('.')
     if len(names) <= 1:
@@ -47,7 +50,6 @@ def md5(src=None):
     """
     if not has_text(src):
         return ''
-    import hashlib
     return hashlib.md5(src.encode()).hexdigest().upper()
 
 
@@ -56,9 +58,6 @@ def get_file_md5(path=None):
     获取文件的MD5值
     如果文件不存在，返回''
     """
-    import os
-    import hashlib
-
     if not has_text(path):
         return ''
     if not os.path.isfile(path):
@@ -73,7 +72,6 @@ def get_current_timestamp():
     """
     获取当前时间戳
     """
-    from datetime import datetime
     now = datetime.now()
     return now.timestamp()
 
@@ -82,7 +80,6 @@ def get_current_nanosecond():
     """
     获取当前时间纳秒
     """
-    from datetime import datetime
     return int(datetime.now().timestamp() * 1000000)
 
 
@@ -90,7 +87,6 @@ def get_current_microsecond():
     """
     获取当前时间毫秒
     """
-    from datetime import datetime
     return int(datetime.now().timestamp() * 1000)
 
 
@@ -98,7 +94,6 @@ def get_current_second():
     """
     获取当前秒
     """
-    from datetime import datetime
     return int(datetime.now().timestamp())
 
 
@@ -107,7 +102,6 @@ def get_current_ymd(timestamp=None):
     获取当前年月日
     timestamp单位 秒
     """
-    from datetime import datetime
     now = datetime.now()
     if isinstance(timestamp, int) or isinstance(timestamp, float):
         now = datetime.fromtimestamp(timestamp)
@@ -119,7 +113,6 @@ def get_current_ym(timestamp=None):
     获取当前年月
     timestamp单位 秒
     """
-    from datetime import datetime
     now = datetime.now()
     if isinstance(timestamp, int) or isinstance(timestamp, float):
         now = datetime.fromtimestamp(timestamp)
@@ -131,7 +124,6 @@ def get_current_y(timestamp=None):
     获取当前年月
     timestamp单位 秒
     """
-    from datetime import datetime
     now = datetime.now()
     if isinstance(timestamp, int) or isinstance(timestamp, float):
         now = datetime.fromtimestamp(timestamp)
@@ -142,12 +134,26 @@ def get_human_time(timestamp=None):
     """
     获取自然人可读的时间表示
     """
-    from datetime import datetime
     now = datetime.now()
     if isinstance(timestamp, int) or isinstance(timestamp, float):
         now = datetime.fromtimestamp(timestamp)
     return str(now.year).zfill(4) + '-' + str(now.month).zfill(2) + '-' + str(now.day).zfill(2) + ' ' + \
            str(now.hour).zfill(2) + ':' + str(now.minute).zfill(2) + ':' + str(now.second).zfill(2)
+
+
+def is_leap(year=None):
+    """
+    判断闰年：
+    四年一闰，百年不闰，四百年再闰
+    None 返回当前年是否为闰年
+    非int类型 返回False
+    """
+    if year is None:
+        return calendar.isleap(get_current_y())
+    if type(year) == int:
+        return calendar.isleap(year)
+    return False
+
 
 if __name__ == '__main__':
     print('extension of /tmp/log.log.txt is', get_extension('/tmp/log.log.txt'))

@@ -1,0 +1,99 @@
+6.4.4. SEARCH命令
+参数：OPTIONAL [CHARSET]声明，检索准则（一个或者多个）
+响应：REQUIRED非标签化响应：SEARCH
+结果：OK－search完成
+NO－search错误：不能检索该[CHARSET]或者准则
+BAD－未知命令，或者无效参数
+SEARCH命令检索邮箱以获取符合给定准则的邮件。检索准则由一个或者多个检索关键词组成。来自服务器的非标签化SEARCH响应由符合检索准则的邮件相应的邮件序列号列表组成。
+当多个关键词被声明时，结果是匹配这些关键词的所有邮件的交集（并起效）。例如，准则　DELETED FROM “SMITH” SINCE 1-Feb-1994 指向来自Smith的、自从１９９４年２月１日开始存放于邮箱中的所有被删除的邮件。一个检索关键词也可以是一个或者多个检索关键词的一个组合列表（例如，使用OR和NOT关键词）。
+服务器实现体可能拒绝接受带有终端内容媒体类型的[MIM－IMB]主体部分，而接受TEXT和SEARCH匹配集相应的MESSAGE。
+OPTIONAL [CHARSET]声明由其后紧跟着一个注册了的[CHARSET]的字“CHARSET”组成。它表示，出现在检索准则中的字符串的[CHARSET]。在以[CHARSET]而不是US-ASCII比较文本之前，[MIME-IMB]内容转换编码，及在[RFC- 2822]/[MIME-IMB]头部的[MIME-HDRS]字符串，必须被解码。US-ASCII必须受支持；其它的[CHARSET]s可能受支持。
+如果服务器不支持声明了的[CHARSET]，它必须返回一个标签化的NO响应（而不是一个BAD）。该响应应当包含BADCHARSET响应码，该响应码可能列出受服务器支持的[CHARSET]s。
+在字符串形式的所有检索关键词里，如果该字符串是该范围的一个子串，则邮件符合该关键词。匹配是不区分大小写的。
+已定义的检索关键词如下。参数的准确语法定义参看正式语法一节。
+<sequence set>
+带有已声明的邮件序列号集相应的邮件序列号的邮件。
+ALL
+邮件中所有邮件；ANDing的默认初始关键词。
+ANSWERED
+带有/Answered标记位的邮件。
+BCC: 意思为密送
+BCC <string>
+在信封结构的BCC域包含有指定字符串的邮件。
+BEFORE <date>
+实际日期（忽视时间和时区）早于指定日期的邮件。
+BODY <string>
+在邮件的主体域包含有指定字符串的邮件。
+CC: 意思为'抄送'
+CC <string>
+在信封结构的CC域包含有指定字符串的邮件。
+DELETED
+带有/Deleted标记位的邮件。
+DRAFT
+带有/Draft标记位的邮件。
+FLAGGED
+带有/Flagged标记位的邮件。
+FROM <string>
+在信封结构的FROM域包含有指定字符串的邮件。
+HEADER <field-name> <string>
+带有一个含指定field-name（[RFC-2822]中定义）的头部、且在该头部（它跟在colon之后）的文本中包含指定字符串的邮件。如果将要检索的字符串（参数中的string）长度为零，那么，它将匹配带有一个含指定field-name、内容可有可无的头部行的所有邮件。
+KEYWORD <flag>
+带有指定关键词标记位的邮件。
+LARGER <n>
+带有一个[RFC-2822]（定义）的、大于指定字节数的大小的邮件。
+NEW
+带有/Recent标记位，但不带有/Seen标记的邮件。它在功能上等效于“(RECENT UNSEEN)”。
+NOT <search-key>
+不符合指定检索关键词的邮件。
+OLD
+不带有/Recent标记位的邮件。它在功能上等效于“NOT RECENT”（与“NOT NEW”相反）。
+ON <date>
+实际日期（忽视时间和时区）在指定日期的邮件。
+OR <search-key1> <search-key2>
+符合任意一个检索关键词的邮件。
+RECENT
+带有/Recent标记位的邮件。
+SEEN
+带有/Seen标记位的邮件。
+SENTBEFORE <date>
+[RFC-2822]Date: header（忽视时间和时区）早于指定日期的邮件。
+SENTON <date>
+[RFC-2822]Date: header （忽视时间和时区）在指定日期的邮件。
+SENTSINCE <date>
+[RFC-2822]Date: header （忽视时间和时区）在指定日期或者晚于指定日期的邮件。
+SINCE <date>
+实际日期（忽视时间和时区）在指定日期或者晚于指定日期的邮件。
+SMALLER <n>
+带有一个[RFC-2822]的、小于指定字节数大小的邮件。
+SUBJECT <string>
+在信封结构的SUBJECT域含有指定字符串的邮件。
+TEXT <string>
+在邮件的头部或者主体含有指定字符串的邮件。
+TO <string>
+在信封结构的TO域含有指定字符串的邮件。
+UID <sequence set>
+带有指定唯一标识符集相应的唯一标识符的邮件。序列集顺序排列是允许的。
+UNANSWERED
+不带有/Answered标记位的邮件。
+UNDELETED
+不带有/Deleted标记位的邮件。
+UNDRAFT
+不带有/Draft标记位的邮件。
+UNFLAGGED
+不带有/Flagged标记位的邮件。
+UNKEYWORD <flag>
+不带有指定关键词标记位的邮件。
+UNSEEN
+不带有/Seen标记位的邮件。
+例子：
+C: A282 SEARCH FLAGGED SINCE 1-Feb-1994 NOT FROM “Smith”
+S: * SEARCH 2 84 882
+S: A282 OK SEARCH completed
+C: A283 SEARCH TEXT “string not in mailbox”
+S: * SEARCH
+S: A283 OK SEARCH completed
+C: A284 SEARCH CHARSET UTF-8 TEXT {6}
+C: XXXXXX
+S: * SEARCH 43
+S: A284 OK SEARCH completed
+注意：因为本文档限制于７位ASCII文本，所以不可能显示真的UTF－８。“XXXXXX”可能是实际处理中的８位数据的６个字节。
