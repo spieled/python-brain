@@ -155,6 +155,84 @@ def is_leap(year=None):
     return False
 
 
+def replace(src, sub, replacement):
+    if not has_text(src):
+        return ""
+    if not has_text(sub):
+        return src
+    if not isinstance(replacement, str):
+        return src
+    return src.replace(sub, replacement)
+
+
+def replace_first(src, sub, replacement):
+    if not has_text(src):
+        return ""
+    if not has_text(sub):
+        return src
+    if not isinstance(replacement, str):
+        return src
+    index = src.index(sub)
+    print(index)
+    if index >= 0:
+        return src[0: index] + replacement + src[index+len(sub):]
+    return src
+
+
+def replace_last(src, sub, replacement):
+    if not has_text(src):
+        return ""
+    if not has_text(sub):
+        return src
+    if not isinstance(replacement, str):
+        return src
+    index = src.rindex(sub)
+    if index >= 0:
+        return src[0: index] + replacement + src[index+len(sub):]
+    return src
+
+
+def upper_first_char(src):
+    if not has_text(src):
+        return ""
+    return src.capitalize()
+
+
+def upper_last_char(src):
+    if not has_text(src):
+        return ""
+    return src[0: len(src)-1] + src[len(src)-1:].upper()
+
+
+def lower_first_char(src):
+    if not has_text(src):
+        return ""
+    if len(src) > 1:
+        return src[0:1].lower() + src[1:]
+    else:
+        return src.lower()
+
+
+def lower_last_char(src):
+    if not has_text(src):
+        return ""
+    return src[0:len(src)-1] + src[len(src)-1:].lower()
+
+
+def delete_first_char(src):
+    if not has_text(src):
+        return ""
+    if len(src) > 1:
+        return src[1:]
+    return ""
+
+
+def delete_last_char(src):
+    if not has_text(src):
+        return ""
+    return src[0:len(src)-1]
+
+
 if __name__ == '__main__':
     print('extension of /tmp/log.log.txt is', get_extension('/tmp/log.log.txt'))
     print('extension of /tmp/log.log is', get_extension('/tmp/log.log'))
@@ -188,3 +266,18 @@ if __name__ == '__main__':
     print(get_current_ymd(131180))
 
     print(get_human_time())
+
+    print(replace("-goo-d-man", "-", ""))
+    print(replace_first("-goo-d-man", "-", ""))
+    print(replace_last("-goo-d-man", "-", ""))
+
+    print(upper_first_char("good"))
+    print(upper_last_char("good"))
+    print(lower_first_char("GOOD"))
+    print(lower_last_char("GOOD"))
+
+    print(delete_first_char("good"))
+    print(delete_first_char("g"))
+    print(delete_last_char("good"))
+    print(delete_last_char("g"))
+
