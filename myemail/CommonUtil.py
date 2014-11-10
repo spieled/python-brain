@@ -156,6 +156,9 @@ def is_leap(year=None):
 
 
 def replace(src, sub, replacement):
+    """
+    字符串替换（替换所有匹配）
+    """
     if not has_text(src):
         return ""
     if not has_text(sub):
@@ -166,6 +169,9 @@ def replace(src, sub, replacement):
 
 
 def replace_first(src, sub, replacement):
+    """
+    字符串替换（仅替换第一个匹配项）
+    """
     if not has_text(src):
         return ""
     if not has_text(sub):
@@ -180,6 +186,9 @@ def replace_first(src, sub, replacement):
 
 
 def replace_last(src, sub, replacement):
+    """
+    字符串替换（仅替换最后一个匹配值）
+    """
     if not has_text(src):
         return ""
     if not has_text(sub):
@@ -193,18 +202,27 @@ def replace_last(src, sub, replacement):
 
 
 def upper_first_char(src):
+    """
+    将第一个字符转为大写
+    """
     if not has_text(src):
         return ""
     return src.capitalize()
 
 
 def upper_last_char(src):
+    """
+    将最后一个字符转为大写
+    """
     if not has_text(src):
         return ""
     return src[0: len(src)-1] + src[len(src)-1:].upper()
 
 
 def lower_first_char(src):
+    """
+    将第一个字符转为小写
+    """
     if not has_text(src):
         return ""
     if len(src) > 1:
@@ -214,12 +232,18 @@ def lower_first_char(src):
 
 
 def lower_last_char(src):
+    """
+    将最后一个字符转为小写
+    """
     if not has_text(src):
         return ""
     return src[0:len(src)-1] + src[len(src)-1:].lower()
 
 
 def delete_first_char(src):
+    """
+    删除第一个字符
+    """
     if not has_text(src):
         return ""
     if len(src) > 1:
@@ -228,6 +252,9 @@ def delete_first_char(src):
 
 
 def delete_last_char(src):
+    """
+    删除最后一个字符
+    """
     if not has_text(src):
         return ""
     return src[0:len(src)-1]
